@@ -5,7 +5,6 @@ os.chdir(r"C:\\Users\\rohit\\OneDrive\\Desktop\\DSBDA")
 
 #air_q = pd.read_csv('airquality.csv',index_col=0)
 #pd.head()
-#cars_data1=cars_data.copy(deep=True)
 
 aq = pd.read_csv(r'C:\Users\rohit\OneDrive\Desktop\DSBDA\airquality.csv')
 hrt = pd.read_csv(r'C:\Users\rohit\OneDrive\Desktop\DSBDA\heart.csv')
