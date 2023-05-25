@@ -1,0 +1,47 @@
+
+import pandas as pd
+import numpy as np
+
+
+fb = pd.read_csv('Path/to/the/Dataset/Facebook.csv')
+
+
+# Part A --> Create data subsets
+
+fb1 = fb[['Page total likes', 'Category', 'Post Month', 'Post Weekday']].loc[0:15]
+print(fb1)
+
+fb2 = fb[['Page total likes', 'Category', 'Post Month', 'Post Weekday']].loc[16:30]
+print(fb2)
+
+fb3 = fb[['Page total likes', 'Category', 'Post Month', 'Post Weekday']].loc[31:50]
+print(fb3)
+
+# Part B --> Merge Data
+
+merging = pd.concat([fb1, fb2, fb3])
+print(merging)
+
+
+# Part C --> Sort Data
+
+sort_values = fb.sort_values('Page total likes', ascending = False)
+print(sort_values)
+
+# Part D --> Transpose of data
+
+print(fb.transpose())
+
+
+# Part E --> Shaping Reshaping
+
+shaping = fb.shape
+print(shaping)
+
+pivot_table = pd.pivot_table(fb, index = ['Type', 'Category'], values = 'comment')
+print(pivot_table)
+
+# reshaping using array
+
+reshaping_arr = np.array([1, 2, 3, 4, 5, 6])
+reshaping_arr.reshape(3, 2)
