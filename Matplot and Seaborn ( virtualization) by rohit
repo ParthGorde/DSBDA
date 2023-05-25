@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 os.chdir("C:\\Users\\HP\\Desktop\\DSBDA TE IT")
 
-
 # treat nan missing values as nan
 cars_data=pd.read_csv('Toyota.csv',index_col=0,na_values=['??','????'])
 cars_data1=cars_data.copy(deep=True)
