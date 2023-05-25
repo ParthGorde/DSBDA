@@ -1,0 +1,106 @@
+# -*- coding: utf-8 -*-
+"""
+Perform the following operations using Python on the given data sets
+a. Create data subsets
+b. Merge Data
+c. Sort Data
+d. Transposing Data
+e. Shape and reshape Data
+
+"""
+
+import pandas as pd
+# Creating a DataFrame object 
+#1. Create a dictionary where keys are column names and values are opbservation
+
+d={'Student name':['raj','mahesh','jon'],'age':[22,23,25]}
+
+#2. Pass the dictionary to DataFrame method 
+df=pd.DataFrame(d)
+
+d1={'roll no':[1,2,3],'Student name':['raj','dilip','raam'],'age':[22,22,22]}
+df1=pd.DataFrame(d1)
+
+merged1=pd.merge (df,df1, on='Student Name')
+
+
+
+
+# read dataset in dataFrame 
+dset=pd.read_csv(r""C:\Users\Asus\Desktop\DSBDA\data\fb.csv"")
+
+p=dset.shape # returns a tuple  
+
+dset.describe()
+# return a table having summary of each colum based on some math functions
+
+
+
+p=dset.info() # provide column wise data types, null information
+dset.columns
+dset.columns.values
+dset.columns.value_counts()
+dset.dtypes
+## get columnwise outcome of following aggregate functions
+# min(),max(),sum(),
+dset.min()
+# Accessing the columns
+dset['pagetotallikes']
+
+dset['category'].min()
+#---------------------------------------
+
+# create subsets
+
+# subset of initial specified observations
+dset.head(20)
+
+# Subset of last specified observations
+dset.tail(40)
+
+# subset selecting specified columns only
+## dset[ [ list of variables]  ]
+
+sub1= dset[['pagetotallikes','type','category','comment']]
+
+#subset having specfied colums and range of observations 
+sub2= dset[['pagetotallikes','type','category','comment']].loc[50:300]
+suset=dset[['pagetotallikes','type']].loc[(dset['type']!=2)]
+
+#subset having observations constrained on some column 
+sub6=dset[ dset['type']==3 ] 
+#-- Create subset of observatioins having category 3 and page total like>120000 or nonzero counts of comments
+sub8=dset[ (dset['type']==3) & (dset['pagetotallikes']>110000) | (dset['comment']!=0)]
+#-- Create subset of observatioins having category 3 and page total like>120000
+sub7=dset[(dset['type']==3)&(dset['pagetotallikes']>110000)]
+#------------------------------------------
+
+## merge dataset
+sub2= dset[['pagetotallikes','type','category','comment']].loc[50:150]
+sub3= dset[['pagetotallikes','type','category','comment']].loc[151:300]
+sub4= dset[['pagetotallikes','type','category','comment']].loc[1:25]
+
+# obsesrvations appended using pd.concat()
+mergedSet=pd.concat([sub2,sub4])
+
+
+##-----------------------------------
+### Sort observations in  column values oder
+
+sorteddset=dset.sort_values('pagetotallikes')
+
+sorteddset=dset.sort_values('pagetotallikes', ascending=False)
+
+#------------------------------------------------
+### Transpose
+Tsub4=sub4.transpose()
+
+#--------------------------
+#shape and reshape like pivot table
+df1.shape
+
+p_table=pd.pivot_table(df1,index=['roll no','Student name'],values='age')
+
+p_table.shape
+
+
