@@ -4,7 +4,6 @@ import numpy as np
 
 fb = pd.read_csv('Path/to/the/Dataset/Facebook.csv')
 
-
 # Part A --> Create data subsets
 
 fb1 = fb[['Page total likes', 'Category', 'Post Month', 'Post Weekday']].loc[0:15]
