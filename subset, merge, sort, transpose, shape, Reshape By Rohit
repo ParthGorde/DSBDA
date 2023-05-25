@@ -2,7 +2,6 @@
 import pandas as pd
 import numpy as np
 
-
 fb = pd.read_csv('Path/to/the/Dataset/Facebook.csv')
 
 
