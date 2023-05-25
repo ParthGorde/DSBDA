@@ -1,0 +1,55 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Read the CSV file
+cars_data = pd.read_csv('Toyota.csv', index_col=0, na_values=['??', '????'])
+
+# Drop rows with missing values
+cars_data.dropna(axis=0, inplace=True)
+
+# Scatter Plot
+plt.scatter(cars_data['Age'], cars_data['Price'], c='blue')
+plt.title("Scatter Plot Car Price vs Age")
+plt.xlabel('Age in months')
+plt.ylabel('Price in Dollars')
+plt.show()
+
+# Histogram
+plt.hist(cars_data['KM'], color='blue', edgecolor='white', bins=5)
+plt.title("Histogram of Kilometer run")
+plt.xlabel('Kilometers')
+plt.ylabel('Frequency')
+plt.show()
+
+# Bar Plot
+fuelTypes = ('Petrol', 'Diesel', 'CNG')
+counts = cars_data['FuelType'].value_counts()
+index = np.arange(len(fuelTypes))
+
+plt.bar(index, counts, color=['red', 'green', 'cyan'])
+plt.title("Bar Plot of Fuel Type")
+plt.xlabel('Fuel Used')
+plt.ylabel('Frequency')
+plt.xticks(index, fuelTypes, rotation=90)
+plt.show()
+
+# Scatter Plot using seaborn
+sns.set(style='darkgrid')
+sns.regplot(x=cars_data['Age'], y=cars_data['Price'])
+plt.show()
+
+# Histogram using seaborn
+sns.displot(cars_data['Age'])
+plt.show()
+
+# Bar Plot using seaborn
+sns.countplot(x='FuelType', data=cars_data)
+plt.show()
+
+# Box Plot using seaborn
+sns.boxplot(y=cars_data['Price'])
+plt.show()
+sns.boxplot(y=cars_data['Price'], x=cars_data['FuelType'])
+plt.show()
