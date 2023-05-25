@@ -1,0 +1,124 @@
+import os 
+import pandas as pd 
+import numpy as np
+os.chdir(r"C:\\Users\\rohit\\OneDrive\\Desktop\\DSBDA")
+
+#air_q = pd.read_csv('airquality.csv',index_col=0)
+#pd.head()
+#cars_data1=cars_data.copy(deep=True)
+
+aq = pd.read_csv(r'C:\Users\rohit\OneDrive\Desktop\DSBDA\airquality.csv')
+hrt = pd.read_csv(r'C:\Users\rohit\OneDrive\Desktop\DSBDA\heart.csv')
+
+print(aq.head())
+print(hrt.head())
+
+print(aq.isnull().sum())  #to check if any null value
+
+
+
+# Part A --> Data Cleaning
+
+# Handle missing values
+aq['Ozone'].fillna(aq['Ozone'].mean(), inplace=True)
+aq['Solar.R'].fillna(aq['Solar.R'].median(), inplace=True)
+
+# Remove duplicates
+aq.drop_duplicates(inplace=True)
+
+# Remove outliers
+aq = aq[(aq['Ozone'] >= 0) & (aq['Ozone'] <= 200)]
+
+# Standardize the Date column
+aq['Day'] = pd.to_datetime(aq['Day'])
+
+# Print cleaned dataset
+print(aq.head())
+
+
+
+# Part B --> Data Integration
+
+# Concatenate the datasets vertically
+merged_data = pd.concat([aq, hrt], axis=0)
+
+# Print the integrated dataset
+print(merged_data.head())
+
+
+# Part C --> Data transformation
+print(aq.dtypes)
+
+# Converting datatype explicitly
+
+aq['Ozone'] = aq['Ozone'].astype('object')
+print(aq.dtypes)
+
+
+# Min-Max Normalization
+def MinMax_normalize(x):
+    return (x - x.min()) / (x.max() - x.min())
+
+# Apply the transformation function to the specified columns
+columns_to_normalize = ['Ozone', 'Solar.R', 'Wind', 'Temp', 'Month', 'Day']
+aq[columns_to_normalize] = aq[columns_to_normalize].apply(MinMax_normalize)
+
+# Z-Score Normalization
+def ZScore_normalize(x):
+    return (x - x.mean()) / x.std()
+
+# Apply the transformation function to the specified columns
+aq[columns_to_normalize] = aq[columns_to_normalize].apply(ZScore_normalize)
+
+columns_to_normalize = ['Ozone', 'Solar.R', 'Wind', 'Temp', 'Month', 'Day']
+aq[columns_to_normalize] = ZScore_normalize(aq[columns_to_normalize])
+
+
+## get dummies for categorical data
+
+# Create separate arrays for each column
+Ozone = [41, 36, 12, 18, 37, 29, 23]
+Solar_R = [190, 118, 149, 313, None, 299, 99]
+Wind = [7.4, 8.0, 12.6, 11.5, 12.6, 10.9, 13.8]
+Temp = [67, 72, 74, 62, 65, 66, 68]
+Month = [5, 5, 5, 5, 6, 6, 6]
+Day = [1, 2, 3, 4, 5, 6, 7]
+
+# Create a dictionary with column names as keys and corresponding arrays as values
+data = {'Ozone': Ozone, 'Solar.R': Solar_R, 'Wind': Wind, 'Temp': Temp, 'Month': Month, 'Day': Day}
+
+# Create the DataFrame
+aqdf = pd.DataFrame(data)
+
+# Display the DataFrame
+print(aqdf)
+
+
+# Part D --> Error correcting
+
+# Check unique values in the respective columns
+print(np.unique(aq['Ozone']))
+print(np.unique(aq['Solar.R']))
+print(np.unique(aq['Wind']))
+print(np.unique(aq['Temp']))
+print(np.unique(aq['Month']))
+print(np.unique(aq['Day']))
+
+# Replace inconsistent values with desired format
+aq['Ozone'].replace('missing_value', np.nan, inplace=True)  # Replace 'missing_value' with NaN or any appropriate value
+aq['Solar.R'].replace('missing_value', np.nan, inplace=True)  # Replace 'missing_value' with NaN or any appropriate value
+
+# Convert columns to numeric data type
+aq['Ozone'] = pd.to_numeric(aq['Ozone'])
+aq['Solar.R'] = pd.to_numeric(aq['Solar.R'])
+
+# Verify the changes
+print(aq['Ozone'].dtype)
+print(aq['Solar.R'].dtype)
+
+
+
+
+    
+
+
